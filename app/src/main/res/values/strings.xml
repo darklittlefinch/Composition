@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Composition</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="game_name">Number composition</string>
+
+    <string name="rules_label">Rules</string>
+    <string name="rules_text">You will see three numbers. One of them will be on top of the other
+        two. You should select the number from the list below so that the sum of the two bottom
+        numbers is equal to the top number.</string>
+    <string name="rules_example_label">Example</string>
+    <string name="rules_example">The top number is 7. One of the bottom numbers has value 4, the
+        other only has a question mark. The correct answer to this question is 3 because
+        3 + 4 = 7.</string>
+    <string name="rules_button">Understood</string>
+
+    <string name="difficulty_label">Select difficulty level:</string>
+    <string name="difficulty_test">Test</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+
+    <string name="game_timer">%s:%s</string>
+    <string name="game_question_mark">\?</string>
+    <string name="game_stats">Correct answers: %s (required: %s)</string>
+    <string name="game_plus">+</string>
+
+    <string name="results_label_win">You win!</string>
+    <string name="results_label_lose">You lose!</string>
+    <string name="results_score">Your score: %s</string>
+    <string name="results_percentage">Your accuracy: %s</string>
+    <string name="results_required">required: %s</string>
+    <string name="results_button">Try again</string>
+
+    <string name="main_pic_description">Brain games abstract illustration</string>
+    <string name="results_pic_description">Picture with heart</string>
+
 </resources>

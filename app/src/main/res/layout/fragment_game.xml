@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    tools:context=".presentation.GameFragment">
+
+    <TextView
+        android:id="@+id/tvTimer"
+        style="@style/TimerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tvSum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:47" />
+
+    <TextView
+        android:id="@+id/tvSum"
+        style="@style/SumStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tvVisibleNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTimer"
+        tools:text="71" />
+
+    <TextView
+        android:id="@+id/tvVisibleNumber"
+        style="@style/VisibleNumberStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/tvQuestionMark"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSum"
+        tools:text="24" />
+
+    <TextView
+        android:id="@+id/tvPlus"
+        style="@style/TitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_plus"
+        app:layout_constraintBottom_toBottomOf="@+id/tvQuestionMark"
+        app:layout_constraintEnd_toStartOf="@+id/tvQuestionMark"
+        app:layout_constraintStart_toEndOf="@+id/tvVisibleNumber"
+        app:layout_constraintTop_toTopOf="@+id/tvQuestionMark" />
+
+    <TextView
+        android:id="@+id/tvQuestionMark"
+        style="@style/QuestionStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_question_mark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvVisibleNumber"
+        app:layout_constraintTop_toBottomOf="@id/tvSum" />
+
+    <TextView
+        android:id="@+id/tvStats"
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/game_stats"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@id/tvAnswer1"
+        app:layout_constraintBottom_toTopOf="@id/tvAnswer1" />
+
+    <TextView
+        android:id="@+id/tvAnswer1"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/red_bg"
+        android:textColor="@color/red_text"
+        app:layout_constraintBottom_toTopOf="@id/tvAnswer4"
+        app:layout_constraintEnd_toStartOf="@id/tvAnswer2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="48" />
+
+    <TextView
+        android:id="@+id/tvAnswer2"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/orange_bg"
+        android:textColor="@color/orange_text"
+        app:layout_constraintBottom_toTopOf="@id/tvAnswer5"
+        app:layout_constraintEnd_toStartOf="@id/tvAnswer3"
+        app:layout_constraintStart_toEndOf="@id/tvAnswer1"
+        tools:text="53" />
+
+    <TextView
+        android:id="@+id/tvAnswer3"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/yellow_bg"
+        android:textColor="@color/yellow_text"
+        app:layout_constraintBottom_toTopOf="@id/tvAnswer6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvAnswer2"
+        tools:text="45" />
+
+    <TextView
+        android:id="@+id/tvAnswer4"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/violet_bg"
+        android:textColor="@color/violet_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvAnswer5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="52" />
+
+    <TextView
+        android:id="@+id/tvAnswer5"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/blue_bg"
+        android:textColor="@color/blue_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvAnswer6"
+        app:layout_constraintStart_toEndOf="@id/tvAnswer4"
+        tools:text="47" />
+
+    <TextView
+        android:id="@+id/tvAnswer6"
+        style="@style/AnswerStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/green_bg"
+        android:textColor="@color/green_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvAnswer5"
+        tools:text="49" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
