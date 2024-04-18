@@ -61,12 +61,4 @@
         android:text="@string/difficulty_hard"
         app:layout_constraintTop_toBottomOf="@id/buttonMedium" />
 
-    <Button
-        android:id="@+id/buttonRules"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_label"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
