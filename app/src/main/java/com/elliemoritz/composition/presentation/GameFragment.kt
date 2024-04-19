@@ -52,10 +52,10 @@ class GameFragment : Fragment() {
     @Suppress("DEPRECATION")
     private fun parseArgs() {
         difficulty = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getSerializable(KEY_DIFFICULTY, Difficulty::class.java)
+            requireArguments().getParcelable(KEY_DIFFICULTY, Difficulty::class.java)
                 ?: throw RuntimeException("Object with key $KEY_DIFFICULTY not found")
         } else {
-            requireArguments().getSerializable(KEY_DIFFICULTY) as Difficulty
+            requireArguments().getParcelable<Difficulty>(KEY_DIFFICULTY) as Difficulty
         }
     }
 
@@ -76,7 +76,7 @@ class GameFragment : Fragment() {
         fun newInstance(difficulty: Difficulty) =
             GameFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_DIFFICULTY, difficulty)
+                    putParcelable(KEY_DIFFICULTY, difficulty)
                 }
             }
     }

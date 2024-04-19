@@ -29,10 +29,10 @@ class GameFinishedFragment : Fragment() {
     @Suppress("DEPRECATION")
     private fun parseArgs() {
         gameResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getSerializable(KEY_GAME_RESULT, GameResult::class.java)
+            requireArguments().getParcelable(KEY_GAME_RESULT, GameResult::class.java)
                 ?: throw RuntimeException("Object with key $KEY_GAME_RESULT not found")
         } else {
-            requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
+            requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT) as GameResult
         }
     }
 
@@ -120,7 +120,7 @@ class GameFinishedFragment : Fragment() {
         fun newInstance(gameResult: GameResult) =
             GameFinishedFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_GAME_RESULT, gameResult)
+                    putParcelable(KEY_GAME_RESULT, gameResult)
                 }
             }
     }
