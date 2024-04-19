@@ -1,17 +1,17 @@
 package com.elliemoritz.composition.presentation
 
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.bumptech.glide.Glide
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameFinishedBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.elliemoritz.composition.domain.entities.GameResult
 
 class GameFinishedFragment : Fragment() {
 
@@ -19,15 +19,20 @@ class GameFinishedFragment : Fragment() {
     private val binding: FragmentGameFinishedBinding
         get() = _binding ?: throw RuntimeException("FragmentGameFinishedBinding == null")
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var gameResult: GameResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        parseArgs()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun parseArgs() {
+        gameResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireArguments().getSerializable(KEY_GAME_RESULT, GameResult::class.java)
+                ?: throw RuntimeException("Object with key $KEY_GAME_RESULT not found")
+        } else {
+            requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
         }
     }
 
@@ -41,16 +46,81 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setResultTextAndPic()
+        setupAllStats()
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true
+            ) {
+            override fun handleOnBackPressed() {
+                retryGame()
+            }
+        })
+
+        binding.buttonTryAgain.setOnClickListener { retryGame() }
+    }
+
+    private fun setResultTextAndPic() {
+        if (gameResult.playerIsWinner) {
+            binding.tvResultLabel.text = getString(R.string.results_label_win)
+            Glide
+                .with(requireContext())
+                .load(R.drawable.ic_like)
+                .into(binding.ivResultPic)
+        } else {
+            binding.tvResultLabel.text = getString(R.string.results_label_lose)
+            Glide
+                .with(requireContext())
+                .load(R.drawable.ic_dislike)
+                .into(binding.ivResultPic)
+        }
+    }
+
+    private fun setupAllStats() {
+        val scoreText = getString(
+            R.string.results_score,
+            "${gameResult.rightAnswersCount} / ${gameResult.totalQuestionsCount}"
+        )
+        binding.tvAnswersCount.text = scoreText
+
+        val percentageText = getString(
+            R.string.results_percentage,
+            "${gameResult.totalQuestionsCount}%"
+        )
+        binding.tvAnswersPercentage.text = percentageText
+
+        val requiredAnswersText = getString(
+            R.string.results_required,
+            gameResult.gameSettings.minRightAnswersCount.toString()
+        )
+        binding.tvRequiredAnswersCount.text = requiredAnswersText
+
+        val requiredPercentageText = getString(
+            R.string.results_required,
+            "${gameResult.gameSettings.minRightAnswersPercentage}%"
+        )
+        binding.tvRequiredAnswersPercentage.text = requiredPercentageText
+    }
+
+    private fun retryGame() {
+        requireActivity().supportFragmentManager.popBackStack(
+            GameFragment.FRAGMENT_NAME,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     companion object {
-        // TODO: Rename and change types and number of parameters
+        const val FRAGMENT_NAME = "GameFinishedFragment"
+
+        private const val KEY_GAME_RESULT = "gameResult"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(gameResult: GameResult) =
             GameFinishedFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putSerializable(KEY_GAME_RESULT, gameResult)
                 }
             }
     }

@@ -8,28 +8,11 @@ import android.view.ViewGroup
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentWelcomeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class WelcomeFragment : Fragment() {
 
     private var _binding: FragmentWelcomeBinding? = null
     private val binding: FragmentWelcomeBinding
         get() = _binding ?: throw RuntimeException("FragmentWelcomeBinding == null")
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +24,9 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.buttonUnderstood.setOnClickListener {
+            launchChooseDifficultyFragment()
+        }
     }
 
     override fun onDestroyView() {
@@ -48,15 +34,17 @@ class WelcomeFragment : Fragment() {
         _binding = null
     }
 
+    private fun launchChooseDifficultyFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChooseDifficultyFragment.newInstance())
+            .addToBackStack(ChooseDifficultyFragment.FRAGMENT_NAME)
+            .commit()
+    }
+
     companion object {
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WelcomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): WelcomeFragment {
+            return WelcomeFragment()
+        }
     }
 }

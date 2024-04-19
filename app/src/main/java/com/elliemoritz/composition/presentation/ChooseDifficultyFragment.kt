@@ -7,29 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentChooseDifficultyBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.elliemoritz.composition.domain.entities.Difficulty
 
 class ChooseDifficultyFragment : Fragment() {
 
     private var _binding: FragmentChooseDifficultyBinding? = null
     private val binding: FragmentChooseDifficultyBinding
         get() = _binding ?: throw RuntimeException("FragmentChooseDifficultyBinding == null")
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +25,23 @@ class ChooseDifficultyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnDifficultyClickListeners()
+    }
+
+    private fun setOnDifficultyClickListeners() {
+        with(binding) {
+            buttonTest.setOnClickListener { launchGameFragment(Difficulty.TEST) }
+            buttonEasy.setOnClickListener { launchGameFragment(Difficulty.EASY) }
+            buttonMedium.setOnClickListener { launchGameFragment(Difficulty.MEDIUM) }
+            buttonHard.setOnClickListener { launchGameFragment(Difficulty.HARD) }
+        }
+    }
+
+    private fun launchGameFragment(difficulty: Difficulty) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, GameFragment.newInstance(difficulty))
+            .addToBackStack(GameFragment.FRAGMENT_NAME)
+            .commit()
     }
 
     override fun onDestroyView() {
@@ -49,14 +50,11 @@ class ChooseDifficultyFragment : Fragment() {
     }
 
     companion object {
-        // TODO: Rename and change types and number of parameters
+        const val FRAGMENT_NAME = "ChooseDifficultyFragment"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChooseDifficultyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): ChooseDifficultyFragment {
+            return ChooseDifficultyFragment()
+        }
     }
 }

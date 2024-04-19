@@ -1,17 +1,16 @@
 package com.elliemoritz.composition.presentation
 
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.elliemoritz.composition.domain.entities.Difficulty
+import com.elliemoritz.composition.domain.entities.GameResult
+import com.elliemoritz.composition.domain.entities.GameSettings
 
 class GameFragment : Fragment() {
 
@@ -19,16 +18,11 @@ class GameFragment : Fragment() {
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var difficulty: Difficulty
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        parseArgs()
     }
 
     override fun onCreateView(
@@ -41,6 +35,13 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // TODO: replace GameSettings and GameResult values
+        binding.tvQuestionMark.setOnClickListener {
+            val gameSettings = GameSettings(10, 10, 10, 10)
+            val gameResult = GameResult(false, 3, 7, gameSettings)
+            launchGameFinishedFragment(gameResult)
+        }
     }
 
     override fun onDestroyView() {
@@ -48,14 +49,34 @@ class GameFragment : Fragment() {
         _binding = null
     }
 
+    @Suppress("DEPRECATION")
+    private fun parseArgs() {
+        difficulty = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireArguments().getSerializable(KEY_DIFFICULTY, Difficulty::class.java)
+                ?: throw RuntimeException("Object with key $KEY_DIFFICULTY not found")
+        } else {
+            requireArguments().getSerializable(KEY_DIFFICULTY) as Difficulty
+        }
+    }
+
+    private fun launchGameFinishedFragment(gameResult: GameResult) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
+            .addToBackStack(GameFinishedFragment.FRAGMENT_NAME)
+            .commit()
+    }
+
     companion object {
-        // TODO: Rename and change types and number of parameters
+
+        const val FRAGMENT_NAME = "GameFragment"
+
+        private const val KEY_DIFFICULTY = "difficulty"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(difficulty: Difficulty) =
             GameFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putSerializable(KEY_DIFFICULTY, difficulty)
                 }
             }
     }
