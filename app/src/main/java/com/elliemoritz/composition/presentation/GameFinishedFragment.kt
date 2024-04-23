@@ -81,25 +81,31 @@ class GameFinishedFragment : Fragment() {
     private fun setupAllStats() {
         val scoreText = getString(
             R.string.results_score,
-            "${gameResult.rightAnswersCount} / ${gameResult.totalQuestionsCount}"
+            "${gameResult.correctAnswersCount} / ${gameResult.totalQuestionsCount}"
         )
         binding.tvAnswersCount.text = scoreText
 
+        val percentage = if (gameResult.totalQuestionsCount > 0) {
+            (gameResult.correctAnswersCount / gameResult.totalQuestionsCount) * 100
+        } else {
+            0
+        }
+
         val percentageText = getString(
             R.string.results_percentage,
-            "${gameResult.totalQuestionsCount}%"
+            "$percentage%"
         )
         binding.tvAnswersPercentage.text = percentageText
 
         val requiredAnswersText = getString(
             R.string.results_required,
-            gameResult.gameSettings.minRightAnswersCount.toString()
+            gameResult.gameSettings.minCorrectAnswersCount.toString()
         )
         binding.tvRequiredAnswersCount.text = requiredAnswersText
 
         val requiredPercentageText = getString(
             R.string.results_required,
-            "${gameResult.gameSettings.minRightAnswersPercentage}%"
+            "${gameResult.gameSettings.minCorrectAnswersPercentage}%"
         )
         binding.tvRequiredAnswersPercentage.text = requiredPercentageText
     }
