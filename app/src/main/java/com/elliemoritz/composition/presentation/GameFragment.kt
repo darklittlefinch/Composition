@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.elliemoritz.composition.R
@@ -29,6 +30,17 @@ class GameFragment : Fragment() {
     private lateinit var currentCorrectAnswer: String
     private var totalAnswersCount = 0
     private var correctAnswersCount = 0
+    
+    private val tvOptions by lazy { 
+        mutableListOf<TextView>().apply {
+            add(binding.tvAnswer1)
+            add(binding.tvAnswer2)
+            add(binding.tvAnswer3)
+            add(binding.tvAnswer4)
+            add(binding.tvAnswer5)
+            add(binding.tvAnswer6)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,17 +118,8 @@ class GameFragment : Fragment() {
             tvSum.text = question.sum.toString()
             tvVisibleNumber.text = question.visibleNumber.toString()
 
-            val answerTextViews = listOf(
-                tvAnswer1,
-                tvAnswer2,
-                tvAnswer3,
-                tvAnswer4,
-                tvAnswer5,
-                tvAnswer6
-            )
-
-            for (i in answerTextViews.indices) {
-                answerTextViews[i].text = question.options[i].toString()
+            for (i in tvOptions.indices) {
+                tvOptions[i].text = question.options[i].toString()
             }
         }
     }
@@ -146,16 +149,7 @@ class GameFragment : Fragment() {
     }
 
     private fun setOnAnswerClickListeners() {
-        val answerTextViews = listOf(
-            binding.tvAnswer1,
-            binding.tvAnswer2,
-            binding.tvAnswer3,
-            binding.tvAnswer4,
-            binding.tvAnswer5,
-            binding.tvAnswer6
-        )
-
-        for (answerTextView in answerTextViews) {
+        for (answerTextView in tvOptions) {
             answerTextView.setOnClickListener {
                 totalAnswersCount++
                 if (answerTextView.text.toString() == currentCorrectAnswer) {
