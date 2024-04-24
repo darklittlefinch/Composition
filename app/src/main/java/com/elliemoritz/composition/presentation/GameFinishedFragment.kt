@@ -86,7 +86,8 @@ class GameFinishedFragment : Fragment() {
         binding.tvAnswersCount.text = scoreText
 
         val percentage = if (gameResult.totalQuestionsCount > 0) {
-            (gameResult.correctAnswersCount / gameResult.totalQuestionsCount) * 100
+            ((gameResult.correctAnswersCount / gameResult.totalQuestionsCount.toDouble()) * 100)
+                .toInt()
         } else {
             0
         }

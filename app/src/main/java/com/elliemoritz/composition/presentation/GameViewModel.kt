@@ -33,9 +33,9 @@ class GameViewModel : ViewModel() {
     val correctAnswersCounter: LiveData<Int>
         get() = _correctAnswersCounter
 
-    private val _secondsLeft = MutableLiveData<Int>()
-    val secondsLeft: LiveData<Int>
-        get() = _secondsLeft
+    private val _formattedTime = MutableLiveData<String>()
+    val formattedTime: LiveData<String>
+        get() = _formattedTime
 
     private val _shouldFinishGame = MutableLiveData(false)
     val shouldFinishGame: LiveData<Boolean>
@@ -66,12 +66,11 @@ class GameViewModel : ViewModel() {
 
     fun setupTimer(initialTimeInSeconds: Int) {
         val countDownTimer = object : CountDownTimer(
-            initialTimeInSeconds * MILLIS_IN_SECONDS,
-            MILLIS_IN_SECONDS
+            initialTimeInSeconds * MILLIS_IN_SECOND,
+            MILLIS_IN_SECOND
         ) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = (millisUntilFinished / 1000).toInt()
-                _secondsLeft.value = seconds
+                _formattedTime.value = formatTime(millisUntilFinished)
             }
 
             override fun onFinish() {
@@ -81,7 +80,18 @@ class GameViewModel : ViewModel() {
         countDownTimer.start()
     }
 
+    private fun formatTime(millisUntilFinished: Long): String {
+        val timeInSeconds = millisUntilFinished / MILLIS_IN_SECOND
+
+        val minutesLeft = timeInSeconds / SECONDS_IN_MINUTE
+        val secondsLeft = timeInSeconds - (minutesLeft * SECONDS_IN_MINUTE)
+
+        return String.format(TIMER_TEMPLATE, minutesLeft, secondsLeft)
+    }
+
     companion object {
-        private const val MILLIS_IN_SECONDS = 1000L
+        private const val MILLIS_IN_SECOND = 1000L
+        private const val SECONDS_IN_MINUTE = 60
+        private const val TIMER_TEMPLATE = "%02d:%02d"
     }
 }

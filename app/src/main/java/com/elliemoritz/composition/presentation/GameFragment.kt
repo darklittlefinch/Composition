@@ -16,7 +16,9 @@ import com.elliemoritz.composition.domain.entities.Question
 
 class GameFragment : Fragment() {
 
-    private lateinit var viewModel: GameViewModel
+    private val viewModel: GameViewModel by lazy {
+        ViewModelProvider(this)[GameViewModel::class.java]
+    }
 
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
@@ -53,7 +55,6 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
         observeViewModel()
         setOnAnswerClickListeners()
@@ -88,11 +89,8 @@ class GameFragment : Fragment() {
             binding.tvStats.text = statsText
         }
 
-        viewModel.secondsLeft.observe(viewLifecycleOwner) {
-            val seconds = it
-            val minutes = it / 60
-
-            updateTimer(seconds, minutes)
+        viewModel.formattedTime.observe(viewLifecycleOwner) {
+            binding.tvTimer.text = it
         }
 
         viewModel.shouldFinishGame.observe(viewLifecycleOwner) {
@@ -100,27 +98,6 @@ class GameFragment : Fragment() {
                 val gameResult = getGameResult()
                 launchGameFinishedFragment(gameResult)
             }
-        }
-    }
-
-    private fun updateTimer(seconds: Int, minutes: Int) {
-        val secondsText = getStringValueOfTime(seconds)
-        val minutesText = getStringValueOfTime(minutes)
-
-        val timerText = getString(
-            R.string.game_timer,
-            minutesText,
-            secondsText
-        )
-
-        binding.tvTimer.text = timerText
-    }
-
-    private fun getStringValueOfTime(time: Int): String {
-        return if (time > 9) {
-            time.toString()
-        } else {
-            "0$time"
         }
     }
 
@@ -149,11 +126,10 @@ class GameFragment : Fragment() {
         val playerGotEnoughCorrectAnswers =
             correctAnswersCount >= minCorrectAnswersCount
 
-
         val percentage = if (totalAnswersCount == 0) {
             0
         } else {
-            (correctAnswersCount / totalAnswersCount * 100)
+            ((correctAnswersCount / totalAnswersCount.toDouble()) * 100).toInt()
         }
         val minCorrectAnswersPercentage = gameSettings.minCorrectAnswersPercentage
         val playerGotEnoughPercentage = percentage >= minCorrectAnswersPercentage
