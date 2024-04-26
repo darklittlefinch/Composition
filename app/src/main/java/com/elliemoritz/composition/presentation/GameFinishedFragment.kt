@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameFinishedBinding
 
 class GameFinishedFragment : Fragment() {
