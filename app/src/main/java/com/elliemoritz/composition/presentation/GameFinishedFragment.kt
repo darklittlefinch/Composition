@@ -29,30 +29,15 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setResultTextAndPic()
-        setupAllStats()
-
-        binding.buttonTryAgain.setOnClickListener { retryGame() }
-    }
-
-    private fun setResultTextAndPic() {
-        if (args.gameResult.playerIsWinner) {
-            binding.tvResultLabel.text = getString(R.string.results_label_win)
-            Glide
-                .with(requireContext())
-                .load(R.drawable.ic_like)
-                .into(binding.ivResultPic)
-        } else {
-            binding.tvResultLabel.text = getString(R.string.results_label_lose)
-            Glide
-                .with(requireContext())
-                .load(R.drawable.ic_dislike)
-                .into(binding.ivResultPic)
+        bindViews()
+        binding.buttonTryAgain.setOnClickListener {
+            retryGame()
         }
     }
 
-    private fun setupAllStats() {
+    private fun bindViews() {
+        setResultTextAndPic()
+
         val correctAnswersCount = args.gameResult.correctAnswersCount
         val totalQuestionsCount = args.gameResult.totalQuestionsCount
 
@@ -82,6 +67,22 @@ class GameFinishedFragment : Fragment() {
             args.gameResult.gameSettings.minCorrectAnswersPercentage
         )
         binding.tvRequiredAnswersPercentage.text = requiredPercentageText
+    }
+
+    private fun setResultTextAndPic() {
+        if (args.gameResult.playerIsWinner) {
+            binding.tvResultLabel.text = getString(R.string.results_label_win)
+            Glide
+                .with(requireContext())
+                .load(R.drawable.ic_like)
+                .into(binding.ivResultPic)
+        } else {
+            binding.tvResultLabel.text = getString(R.string.results_label_lose)
+            Glide
+                .with(requireContext())
+                .load(R.drawable.ic_dislike)
+                .into(binding.ivResultPic)
+        }
     }
 
     private fun retryGame() {
