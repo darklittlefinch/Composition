@@ -29,59 +29,10 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindViews()
+
+        binding.gameResult = args.gameResult
         binding.buttonTryAgain.setOnClickListener {
             retryGame()
-        }
-    }
-
-    private fun bindViews() {
-        setResultTextAndPic()
-
-        val correctAnswersCount = args.gameResult.correctAnswersCount
-        val totalQuestionsCount = args.gameResult.totalQuestionsCount
-
-        val scoreText = getString(
-            R.string.results_score,
-            correctAnswersCount,
-            totalQuestionsCount
-        )
-        binding.tvAnswersCount.text = scoreText
-
-        val percentage = if (totalQuestionsCount > 0) {
-            ((correctAnswersCount / totalQuestionsCount.toDouble()) * 100).toInt()
-        } else {
-            0
-        }
-        val percentageText = getString(R.string.results_percentage, percentage)
-        binding.tvAnswersPercentage.text = percentageText
-
-        val requiredAnswersText = getString(
-            R.string.results_required_answers,
-            args.gameResult.gameSettings.minCorrectAnswersCount
-        )
-        binding.tvRequiredAnswersCount.text = requiredAnswersText
-
-        val requiredPercentageText = getString(
-            R.string.results_required_percentage,
-            args.gameResult.gameSettings.minCorrectAnswersPercentage
-        )
-        binding.tvRequiredAnswersPercentage.text = requiredPercentageText
-    }
-
-    private fun setResultTextAndPic() {
-        if (args.gameResult.playerIsWinner) {
-            binding.tvResultLabel.text = getString(R.string.results_label_win)
-            Glide
-                .with(requireContext())
-                .load(R.drawable.ic_like)
-                .into(binding.ivResultPic)
-        } else {
-            binding.tvResultLabel.text = getString(R.string.results_label_lose)
-            Glide
-                .with(requireContext())
-                .load(R.drawable.ic_dislike)
-                .into(binding.ivResultPic)
         }
     }
 

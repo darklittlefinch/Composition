@@ -1,84 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_bg_color"
-    tools:context=".presentation.WelcomeFragment">
+<layout>
 
-    <ImageView
-        android:id="@+id/ivRulesPic"
-        style="@style/ImageStyle"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:contentDescription="@string/main_pic_description"
-        android:src="@drawable/ic_rules_pic"
-        app:layout_constraintBottom_toTopOf="@id/tvGameName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvGameName"
-        style="@style/TitleStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/game_name"
-        app:layout_constraintBottom_toTopOf="@id/tvRulesLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivRulesPic" />
-
-    <TextView
-        android:id="@+id/tvRulesLabel"
-        style="@style/LabelStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_label"
-        app:layout_constraintBottom_toTopOf="@id/tvRules"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvGameName" />
-
-    <TextView
-        android:id="@+id/tvRules"
-        style="@style/TextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_text"
-        app:layout_constraintBottom_toTopOf="@id/tvExampleLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRulesLabel" />
-
-    <TextView
-        android:id="@+id/tvExampleLabel"
-        style="@style/LabelStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_example_label"
-        app:layout_constraintBottom_toTopOf="@id/tvExample"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRules" />
-
-    <TextView
-        android:id="@+id/tvExample"
-        style="@style/TextStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_example"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvExampleLabel" />
-
-    <Button
-        android:id="@+id/buttonUnderstood"
-        style="@style/ButtonStyle"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rules_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/main_bg_color"
+        tools:context=".presentation.WelcomeFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivRulesPic"
+            style="@style/ImageStyle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/main_pic_description"
+            android:src="@drawable/ic_rules_pic"
+            app:layout_constraintBottom_toTopOf="@id/tvGameName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGameName"
+            style="@style/TitleStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/game_name"
+            app:layout_constraintBottom_toTopOf="@id/tvRulesLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRulesPic" />
+
+        <TextView
+            android:id="@+id/tvRulesLabel"
+            style="@style/LabelStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rules_label"
+            app:layout_constraintBottom_toTopOf="@id/tvRules"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGameName" />
+
+        <TextView
+            android:id="@+id/tvRules"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rules_text"
+            app:layout_constraintBottom_toTopOf="@id/tvExampleLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRulesLabel" />
+
+        <TextView
+            android:id="@+id/tvExampleLabel"
+            style="@style/LabelStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rules_example_label"
+            app:layout_constraintBottom_toTopOf="@id/tvExample"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRules" />
+
+        <TextView
+            android:id="@+id/tvExample"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rules_example"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvExampleLabel" />
+
+        <Button
+            android:id="@+id/buttonUnderstood"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rules_button"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

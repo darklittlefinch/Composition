@@ -1,64 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_bg_color"
-    tools:context=".presentation.ChooseDifficultyFragment">
+<layout>
 
-    <TextView
-        android:id="@+id/tvDifficultyLabel"
-        style="@style/TitleStyle"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/difficulty_label"
-        app:layout_constraintBottom_toTopOf="@id/buttonTest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/main_bg_color"
+        tools:context=".presentation.ChooseDifficultyFragment">
 
-    <Button
-        android:id="@+id/buttonTest"
-        style="@style/DifficultyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue_bg"
-        android:textColor="@color/blue_text"
-        android:text="@string/difficulty_test"
-        app:layout_constraintBottom_toTopOf="@id/buttonEasy"
-        app:layout_constraintTop_toBottomOf="@id/tvDifficultyLabel" />
+        <TextView
+            android:id="@+id/tvDifficultyLabel"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/difficulty_label"
+            app:layout_constraintBottom_toTopOf="@id/buttonTest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonEasy"
-        style="@style/DifficultyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_bg"
-        android:textColor="@color/green_text"
-        android:text="@string/difficulty_easy"
-        app:layout_constraintBottom_toTopOf="@id/buttonMedium"
-        app:layout_constraintTop_toBottomOf="@id/buttonTest" />
+        <Button
+            android:id="@+id/buttonTest"
+            style="@style/DifficultyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_bg"
+            android:text="@string/difficulty_test"
+            android:textColor="@color/blue_text"
+            app:layout_constraintBottom_toTopOf="@id/buttonEasy"
+            app:layout_constraintTop_toBottomOf="@id/tvDifficultyLabel" />
 
-    <Button
-        android:id="@+id/buttonMedium"
-        style="@style/DifficultyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/orange_bg"
-        android:textColor="@color/orange_text"
-        android:text="@string/difficulty_medium"
-        app:layout_constraintBottom_toTopOf="@id/buttonHard"
-        app:layout_constraintTop_toBottomOf="@id/buttonEasy" />
+        <Button
+            android:id="@+id/buttonEasy"
+            style="@style/DifficultyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/green_bg"
+            android:text="@string/difficulty_easy"
+            android:textColor="@color/green_text"
+            app:layout_constraintBottom_toTopOf="@id/buttonMedium"
+            app:layout_constraintTop_toBottomOf="@id/buttonTest" />
 
-    <Button
-        android:id="@+id/buttonHard"
-        style="@style/DifficultyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/red_bg"
-        android:textColor="@color/red_text"
-        android:text="@string/difficulty_hard"
-        app:layout_constraintTop_toBottomOf="@id/buttonMedium" />
+        <Button
+            android:id="@+id/buttonMedium"
+            style="@style/DifficultyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange_bg"
+            android:text="@string/difficulty_medium"
+            android:textColor="@color/orange_text"
+            app:layout_constraintBottom_toTopOf="@id/buttonHard"
+            app:layout_constraintTop_toBottomOf="@id/buttonEasy" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/buttonHard"
+            style="@style/DifficultyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red_bg"
+            android:text="@string/difficulty_hard"
+            android:textColor="@color/red_text"
+            app:layout_constraintTop_toBottomOf="@id/buttonMedium" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
