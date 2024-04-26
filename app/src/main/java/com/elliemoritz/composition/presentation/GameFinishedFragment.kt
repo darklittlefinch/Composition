@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameFinishedBinding
@@ -49,15 +50,6 @@ class GameFinishedFragment : Fragment() {
 
         setResultTextAndPic()
         setupAllStats()
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true
-            ) {
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
-        })
 
         binding.buttonTryAgain.setOnClickListener { retryGame() }
     }
@@ -112,16 +104,12 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.FRAGMENT_NAME,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
+        findNavController().popBackStack()
     }
 
     companion object {
         const val FRAGMENT_NAME = "GameFinishedFragment"
-
-        private const val KEY_GAME_RESULT = "gameResult"
+        const val KEY_GAME_RESULT = "gameResult"
 
         @JvmStatic
         fun newInstance(gameResult: GameResult) =

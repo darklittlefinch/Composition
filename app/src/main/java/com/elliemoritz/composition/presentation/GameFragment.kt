@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameBinding
 import com.elliemoritz.composition.domain.entities.Difficulty
@@ -167,17 +168,15 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(GameFinishedFragment.FRAGMENT_NAME)
-            .commit()
+        val args = Bundle().apply {
+            putParcelable(GameFinishedFragment.KEY_GAME_RESULT, gameResult)
+        }
+        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, args)
     }
 
     companion object {
-
         const val FRAGMENT_NAME = "GameFragment"
-
-        private const val KEY_DIFFICULTY = "difficulty"
+        const val KEY_DIFFICULTY = "difficulty"
 
         @JvmStatic
         fun newInstance(difficulty: Difficulty) =
