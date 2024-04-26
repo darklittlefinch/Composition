@@ -1,12 +1,11 @@
 package com.elliemoritz.composition.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentChooseDifficultyBinding
 import com.elliemoritz.composition.domain.entities.Difficulty
 
@@ -39,10 +38,10 @@ class ChooseDifficultyFragment : Fragment() {
     }
 
     private fun launchGameFragment(difficulty: Difficulty) {
-        val args = Bundle().apply {
-            putParcelable(GameFragment.KEY_DIFFICULTY, difficulty)
-        }
-        findNavController().navigate(R.id.action_chooseDifficultyFragment_to_gameFragment, args)
+        findNavController().navigate(
+            ChooseDifficultyFragmentDirections
+                .actionChooseDifficultyFragmentToGameFragment(difficulty)
+        )
     }
 
     override fun onDestroyView() {

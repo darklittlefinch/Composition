@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameFinishedBinding
@@ -14,26 +15,11 @@ import com.elliemoritz.composition.domain.entities.GameResult
 
 class GameFinishedFragment : Fragment() {
 
+    private val args by navArgs<GameFinishedFragmentArgs>()
+
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding: FragmentGameFinishedBinding
         get() = _binding ?: throw RuntimeException("FragmentGameFinishedBinding == null")
-
-    private lateinit var gameResult: GameResult
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun parseArgs() {
-        gameResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getParcelable(KEY_GAME_RESULT, GameResult::class.java)
-                ?: throw RuntimeException("Object with key $KEY_GAME_RESULT not found")
-        } else {
-            requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT) as GameResult
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +39,7 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun setResultTextAndPic() {
-        if (gameResult.playerIsWinner) {
+        if (args.gameResult.playerIsWinner) {
             binding.tvResultLabel.text = getString(R.string.results_label_win)
             Glide
                 .with(requireContext())
@@ -71,13 +57,14 @@ class GameFinishedFragment : Fragment() {
     private fun setupAllStats() {
         val scoreText = getString(
             R.string.results_score,
-            "${gameResult.correctAnswersCount} / ${gameResult.totalQuestionsCount}"
+            "${args.gameResult.correctAnswersCount} " +
+                    "/ ${args.gameResult.totalQuestionsCount}"
         )
         binding.tvAnswersCount.text = scoreText
 
-        val percentage = if (gameResult.totalQuestionsCount > 0) {
-            ((gameResult.correctAnswersCount / gameResult.totalQuestionsCount.toDouble()) * 100)
-                .toInt()
+        val percentage = if (args.gameResult.totalQuestionsCount > 0) {
+            ((args.gameResult.correctAnswersCount / args.gameResult.totalQuestionsCount.toDouble())
+                    * 100).toInt()
         } else {
             0
         }
@@ -90,13 +77,13 @@ class GameFinishedFragment : Fragment() {
 
         val requiredAnswersText = getString(
             R.string.results_required,
-            gameResult.gameSettings.minCorrectAnswersCount.toString()
+            args.gameResult.gameSettings.minCorrectAnswersCount.toString()
         )
         binding.tvRequiredAnswersCount.text = requiredAnswersText
 
         val requiredPercentageText = getString(
             R.string.results_required,
-            "${gameResult.gameSettings.minCorrectAnswersPercentage}%"
+            "${args.gameResult.gameSettings.minCorrectAnswersPercentage}%"
         )
         binding.tvRequiredAnswersPercentage.text = requiredPercentageText
     }

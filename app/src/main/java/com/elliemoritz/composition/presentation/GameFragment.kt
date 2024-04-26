@@ -1,6 +1,5 @@
 package com.elliemoritz.composition.presentation
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameBinding
 import com.elliemoritz.composition.domain.entities.Difficulty
@@ -18,6 +18,8 @@ import com.elliemoritz.composition.domain.entities.Question
 
 class GameFragment : Fragment() {
 
+    private val args by navArgs<GameFragmentArgs>()
+
     private val viewModel: GameViewModel by lazy {
         ViewModelProvider(this)[GameViewModel::class.java]
     }
@@ -26,7 +28,6 @@ class GameFragment : Fragment() {
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
-    private lateinit var difficulty: Difficulty
     private lateinit var gameSettings: GameSettings
     private lateinit var currentCorrectAnswer: String
     private var totalAnswersCount = 0
@@ -40,21 +41,6 @@ class GameFragment : Fragment() {
             add(binding.tvAnswer4)
             add(binding.tvAnswer5)
             add(binding.tvAnswer6)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun parseArgs() {
-        difficulty = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getParcelable(KEY_DIFFICULTY, Difficulty::class.java)
-                ?: throw RuntimeException("Object with key $KEY_DIFFICULTY not found")
-        } else {
-            requireArguments().getParcelable<Difficulty>(KEY_DIFFICULTY) as Difficulty
         }
     }
 
@@ -72,7 +58,7 @@ class GameFragment : Fragment() {
         observeViewModel()
         setOnAnswerClickListeners()
 
-        viewModel.getGameSettings(difficulty)
+        viewModel.getGameSettings(args.difficulty)
     }
 
     private fun observeViewModel() {
@@ -168,10 +154,9 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        val args = Bundle().apply {
-            putParcelable(GameFinishedFragment.KEY_GAME_RESULT, gameResult)
-        }
-        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, args)
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult)
+        )
     }
 
     companion object {
