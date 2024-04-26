@@ -1,6 +1,5 @@
 package com.elliemoritz.composition.presentation
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameFinishedBinding
-import com.elliemoritz.composition.domain.entities.GameResult
 
 class GameFinishedFragment : Fragment() {
 
@@ -55,53 +53,38 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun setupAllStats() {
+        val correctAnswersCount = args.gameResult.correctAnswersCount
+        val totalQuestionsCount = args.gameResult.totalQuestionsCount
+
         val scoreText = getString(
             R.string.results_score,
-            "${args.gameResult.correctAnswersCount} " +
-                    "/ ${args.gameResult.totalQuestionsCount}"
+            correctAnswersCount,
+            totalQuestionsCount
         )
         binding.tvAnswersCount.text = scoreText
 
-        val percentage = if (args.gameResult.totalQuestionsCount > 0) {
-            ((args.gameResult.correctAnswersCount / args.gameResult.totalQuestionsCount.toDouble())
-                    * 100).toInt()
+        val percentage = if (totalQuestionsCount > 0) {
+            ((correctAnswersCount / totalQuestionsCount.toDouble()) * 100).toInt()
         } else {
             0
         }
-
-        val percentageText = getString(
-            R.string.results_percentage,
-            "$percentage%"
-        )
+        val percentageText = getString(R.string.results_percentage, percentage)
         binding.tvAnswersPercentage.text = percentageText
 
         val requiredAnswersText = getString(
-            R.string.results_required,
-            args.gameResult.gameSettings.minCorrectAnswersCount.toString()
+            R.string.results_required_answers,
+            args.gameResult.gameSettings.minCorrectAnswersCount
         )
         binding.tvRequiredAnswersCount.text = requiredAnswersText
 
         val requiredPercentageText = getString(
-            R.string.results_required,
-            "${args.gameResult.gameSettings.minCorrectAnswersPercentage}%"
+            R.string.results_required_percentage,
+            args.gameResult.gameSettings.minCorrectAnswersPercentage
         )
         binding.tvRequiredAnswersPercentage.text = requiredPercentageText
     }
 
     private fun retryGame() {
         findNavController().popBackStack()
-    }
-
-    companion object {
-        const val FRAGMENT_NAME = "GameFinishedFragment"
-        const val KEY_GAME_RESULT = "gameResult"
-
-        @JvmStatic
-        fun newInstance(gameResult: GameResult) =
-            GameFinishedFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(KEY_GAME_RESULT, gameResult)
-                }
-            }
     }
 }

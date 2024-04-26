@@ -48,13 +48,4 @@ class ChooseDifficultyFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    companion object {
-        const val FRAGMENT_NAME = "ChooseDifficultyFragment"
-
-        @JvmStatic
-        fun newInstance(): ChooseDifficultyFragment {
-            return ChooseDifficultyFragment()
-        }
-    }
 }

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameBinding
-import com.elliemoritz.composition.domain.entities.Difficulty
 import com.elliemoritz.composition.domain.entities.GameResult
 import com.elliemoritz.composition.domain.entities.GameSettings
 import com.elliemoritz.composition.domain.entities.Question
@@ -157,18 +156,5 @@ class GameFragment : Fragment() {
         findNavController().navigate(
             GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult)
         )
-    }
-
-    companion object {
-        const val FRAGMENT_NAME = "GameFragment"
-        const val KEY_DIFFICULTY = "difficulty"
-
-        @JvmStatic
-        fun newInstance(difficulty: Difficulty) =
-            GameFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(KEY_DIFFICULTY, difficulty)
-                }
-            }
     }
 }

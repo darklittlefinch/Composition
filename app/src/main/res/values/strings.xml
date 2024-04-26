@@ -27,9 +27,10 @@
 
     <string name="results_label_win">You win!</string>
     <string name="results_label_lose">You lose!</string>
-    <string name="results_score">Your score: %s</string>
-    <string name="results_percentage">Your accuracy: %s</string>
-    <string name="results_required">required: %s</string>
+    <string name="results_score">Your score: %d / %d</string>
+    <string name="results_percentage">Your accuracy: %d%%</string>
+    <string name="results_required_answers">required: %d</string>
+    <string name="results_required_percentage">required: %d%%</string>
     <string name="results_button">Try again</string>
 
     <string name="main_pic_description">Brain games abstract illustration</string>
