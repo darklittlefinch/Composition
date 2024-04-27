@@ -6,6 +6,30 @@ import androidx.databinding.BindingAdapter
 import com.elliemoritz.composition.R
 import com.elliemoritz.composition.domain.entities.GameResult
 
+interface OnOptionClickListener {
+    fun onOptionClick(option: String)
+}
+
+@BindingAdapter("numberAsText")
+fun bindSum(textView: TextView, sum: Int) {
+    textView.text = sum.toString()
+}
+
+@BindingAdapter("stats")
+fun bindStats(textView: TextView, correctAnswersCount: Int) {
+    textView.text = textView.context.getString(
+        R.string.game_stats,
+        correctAnswersCount
+    )
+}
+
+@BindingAdapter("onOptionClickListener")
+fun bindOnOptionClickListener(textView: TextView, onOptionClickListener: OnOptionClickListener) {
+    textView.setOnClickListener {
+        onOptionClickListener.onOptionClick(textView.text.toString())
+    }
+}
+
 @BindingAdapter("image")
 fun bindImage(imageView: ImageView, playerWins: Boolean) {
     imageView.setImageResource(getImageResId(playerWins))

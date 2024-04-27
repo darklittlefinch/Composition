@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,17 +22,6 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
-    
-    private val tvOptions by lazy { 
-        mutableListOf<TextView>().apply {
-            add(binding.tvAnswer1)
-            add(binding.tvAnswer2)
-            add(binding.tvAnswer3)
-            add(binding.tvAnswer4)
-            add(binding.tvAnswer5)
-            add(binding.tvAnswer6)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +38,6 @@ class GameFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         observeViewModel()
-        setOnAnswerClickListeners()
 
         viewModel.startGame(args.difficulty)
     }
@@ -60,14 +47,6 @@ class GameFragment : Fragment() {
             if (it) {
                 val gameResult = viewModel.getGameResult()
                 launchGameFinishedFragment(gameResult)
-            }
-        }
-    }
-
-    private fun setOnAnswerClickListeners() {
-        for (answerTextView in tvOptions) {
-            answerTextView.setOnClickListener {
-                viewModel.chooseOption(answerTextView.text.toString())
             }
         }
     }
