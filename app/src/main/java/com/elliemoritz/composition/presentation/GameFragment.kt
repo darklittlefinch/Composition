@@ -9,11 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.elliemoritz.composition.R
 import com.elliemoritz.composition.databinding.FragmentGameBinding
 import com.elliemoritz.composition.domain.entities.GameResult
-import com.elliemoritz.composition.domain.entities.GameSettings
-import com.elliemoritz.composition.domain.entities.Question
 
 class GameFragment : Fragment() {
 
@@ -26,11 +23,6 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
-
-    private lateinit var gameSettings: GameSettings
-    private lateinit var currentCorrectAnswer: String
-    private var totalAnswersCount = 0
-    private var correctAnswersCount = 0
     
     private val tvOptions by lazy { 
         mutableListOf<TextView>().apply {
@@ -54,95 +46,28 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         observeViewModel()
         setOnAnswerClickListeners()
 
-        viewModel.getGameSettings(args.difficulty)
+        viewModel.startGame(args.difficulty)
     }
 
     private fun observeViewModel() {
-        viewModel.gameSettings.observe(viewLifecycleOwner) {
-            gameSettings = it
-            viewModel.generateQuestion(it.maxSumValue)
-            viewModel.setupTimer(gameSettings.gameTimeInSeconds)
-        }
-
-        viewModel.question.observe(viewLifecycleOwner) {
-            setupQuestion(it)
-        }
-
-        viewModel.correctAnswer.observe(viewLifecycleOwner) {
-            currentCorrectAnswer = it.toString()
-        }
-
-        viewModel.correctAnswersCounter.observe(viewLifecycleOwner) {
-            correctAnswersCount = it
-
-            val statsText = getString(
-                R.string.game_stats,
-                it.toString(),
-                gameSettings.minCorrectAnswersCount.toString()
-            )
-
-            binding.tvStats.text = statsText
-        }
-
-        viewModel.formattedTime.observe(viewLifecycleOwner) {
-            binding.tvTimer.text = it
-        }
-
         viewModel.shouldFinishGame.observe(viewLifecycleOwner) {
             if (it) {
-                val gameResult = getGameResult()
+                val gameResult = viewModel.getGameResult()
                 launchGameFinishedFragment(gameResult)
             }
         }
     }
 
-    private fun setupQuestion(question: Question) {
-        with(binding) {
-            tvSum.text = question.sum.toString()
-            tvVisibleNumber.text = question.visibleNumber.toString()
-
-            for (i in tvOptions.indices) {
-                tvOptions[i].text = question.options[i].toString()
-            }
-        }
-    }
-
-    private fun getGameResult(): GameResult {
-        val minCorrectAnswersCount = gameSettings.minCorrectAnswersCount
-        val playerGotEnoughCorrectAnswers =
-            correctAnswersCount >= minCorrectAnswersCount
-
-        val percentage = if (totalAnswersCount == 0) {
-            0
-        } else {
-            ((correctAnswersCount / totalAnswersCount.toDouble()) * 100).toInt()
-        }
-        val minCorrectAnswersPercentage = gameSettings.minCorrectAnswersPercentage
-        val playerGotEnoughPercentage = percentage >= minCorrectAnswersPercentage
-
-        val playerIsWinner = playerGotEnoughCorrectAnswers && playerGotEnoughPercentage
-
-        val gameResult = GameResult(
-            playerIsWinner,
-            correctAnswersCount,
-            totalAnswersCount,
-            gameSettings
-        )
-        return gameResult
-    }
-
     private fun setOnAnswerClickListeners() {
         for (answerTextView in tvOptions) {
             answerTextView.setOnClickListener {
-                totalAnswersCount++
-                if (answerTextView.text.toString() == currentCorrectAnswer) {
-                    viewModel.increaseCorrectAnswersCounter()
-                }
-
-                viewModel.generateQuestion(gameSettings.maxSumValue)
+                viewModel.chooseOption(answerTextView.text.toString())
             }
         }
     }

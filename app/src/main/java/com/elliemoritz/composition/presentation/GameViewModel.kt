@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.elliemoritz.composition.data.GameRepositoryImpl
 import com.elliemoritz.composition.domain.entities.Difficulty
+import com.elliemoritz.composition.domain.entities.GameResult
 import com.elliemoritz.composition.domain.entities.GameSettings
 import com.elliemoritz.composition.domain.entities.Question
 import com.elliemoritz.composition.domain.usecases.GenerateQuestionUseCase
@@ -17,17 +18,14 @@ class GameViewModel : ViewModel() {
     private val getGameSettingUseCase = GetGameSettingUseCase(repository)
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
 
-    private val _gameSettings = MutableLiveData<GameSettings>()
-    val gameSettings: LiveData<GameSettings>
-        get() = _gameSettings
+    private lateinit var gameSettings: GameSettings
+    private var currentCorrectAnswer = 0
+    private var totalAnswersCount = 0
+    private var correctAnswersCount = 0
 
     private val _question = MutableLiveData<Question>()
     val question: LiveData<Question>
         get() = _question
-
-    private val _correctAnswer = MutableLiveData<Int>()
-    val correctAnswer: LiveData<Int>
-        get() = _correctAnswer
 
     private val _correctAnswersCounter = MutableLiveData(0)
     val correctAnswersCounter: LiveData<Int>
@@ -41,30 +39,13 @@ class GameViewModel : ViewModel() {
     val shouldFinishGame: LiveData<Boolean>
         get() = _shouldFinishGame
 
-    fun getGameSettings(difficulty: Difficulty) {
-        val gameSettingValue = getGameSettingUseCase(difficulty)
-        _gameSettings.value = gameSettingValue
+    fun startGame(difficulty: Difficulty) {
+        gameSettings = getGameSettingUseCase(difficulty)
+        setupTimer(gameSettings.gameTimeInSeconds)
+        generateQuestion(gameSettings.maxSumValue)
     }
 
-    fun generateQuestion(maxSumValue: Int) {
-        val questionValue = generateQuestionUseCase(maxSumValue)
-
-        for (option in questionValue.options) {
-            if (option == questionValue.sum - questionValue.visibleNumber) {
-                _correctAnswer.value = option
-                break
-            }
-        }
-
-        _question.value = questionValue
-    }
-
-    fun increaseCorrectAnswersCounter() {
-        val oldValue = _correctAnswersCounter.value ?: 0
-        _correctAnswersCounter.value = oldValue + 1
-    }
-
-    fun setupTimer(initialTimeInSeconds: Int) {
+    private fun setupTimer(initialTimeInSeconds: Int) {
         val countDownTimer = object : CountDownTimer(
             initialTimeInSeconds * MILLIS_IN_SECOND,
             MILLIS_IN_SECOND
@@ -87,6 +68,62 @@ class GameViewModel : ViewModel() {
         val secondsLeft = timeInSeconds - (minutesLeft * SECONDS_IN_MINUTE)
 
         return String.format(TIMER_TEMPLATE, minutesLeft, secondsLeft)
+    }
+
+    private fun generateQuestion(maxSumValue: Int) {
+        val questionValue = generateQuestionUseCase(maxSumValue)
+
+        for (option in questionValue.options) {
+            if (option == questionValue.sum - questionValue.visibleNumber) {
+                currentCorrectAnswer = option
+                break
+            }
+        }
+
+        _question.value = questionValue
+    }
+
+    fun chooseOption(option: String) {
+        increaseTotalAnswersCounter()
+
+        if (option.toInt() == currentCorrectAnswer) {
+            increaseCorrectAnswersCounter()
+        }
+
+        generateQuestion(gameSettings.maxSumValue)
+    }
+
+    private fun increaseTotalAnswersCounter() {
+        totalAnswersCount++
+    }
+
+    private fun increaseCorrectAnswersCounter() {
+        correctAnswersCount++
+        _correctAnswersCounter.value = correctAnswersCount
+    }
+
+    fun getGameResult(): GameResult {
+        return GameResult(
+            isPlayerWinner(),
+            correctAnswersCount,
+            totalAnswersCount,
+            gameSettings
+        )
+    }
+
+    private fun isPlayerWinner(): Boolean {
+        val minCorrectAnswersCount = gameSettings.minCorrectAnswersCount
+        val playerGotEnoughCorrectAnswers = correctAnswersCount >= minCorrectAnswersCount
+
+        val percentage = if (totalAnswersCount == 0) {
+            0
+        } else {
+            ((correctAnswersCount / totalAnswersCount.toDouble()) * 100).toInt()
+        }
+        val minCorrectAnswersPercentage = gameSettings.minCorrectAnswersPercentage
+        val playerGotEnoughPercentage = percentage >= minCorrectAnswersPercentage
+
+        return playerGotEnoughCorrectAnswers && playerGotEnoughPercentage
     }
 
     companion object {
