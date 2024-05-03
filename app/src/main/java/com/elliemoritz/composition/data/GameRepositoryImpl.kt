@@ -37,42 +37,46 @@ object GameRepositoryImpl: GameRepository {
 
     override fun getGameSettings(difficulty: Difficulty): GameSettings {
         return when (difficulty) {
-
-            Difficulty.TEST -> {
-                GameSettings(
-                    10,
-                    3,
-                    50,
-                    10
-                )
-            }
-
-            Difficulty.EASY -> {
-                GameSettings(
-                    20,
-                    10,
-                    70,
-                    60
-                )
-            }
-
-            Difficulty.MEDIUM -> {
-                GameSettings(
-                    50,
-                    10,
-                    80,
-                    45
-                )
-            }
-
-            Difficulty.HARD -> {
-                GameSettings(
-                    100,
-                    10,
-                    90,
-                    30
-                )
-            }
+            Difficulty.TEST -> getTestGameSetting()
+            Difficulty.EASY -> getEasyGameSetting()
+            Difficulty.MEDIUM -> getMediumGameSetting()
+            Difficulty.HARD -> getHardGameSetting()
         }
+    }
+
+    private fun getTestGameSetting(): GameSettings {
+        return GameSettings(
+            10,
+            3,
+            50,
+            10
+        )
+    }
+
+    private fun getEasyGameSetting(): GameSettings {
+        return GameSettings(
+            20,
+            10,
+            70,
+            60
+        )
+    }
+
+    private fun getMediumGameSetting(): GameSettings {
+        return GameSettings(
+            50,
+            10,
+            80,
+            45
+        )
+    }
+
+    private fun getHardGameSetting(): GameSettings {
+        return GameSettings(
+            100,
+            10,
+            90,
+            30
+        )
     }
 }
