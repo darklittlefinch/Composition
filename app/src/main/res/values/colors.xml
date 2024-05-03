@@ -2,4 +2,31 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="main_bg_color">#F3FAF9</color>
+    <color name="main_text_color">#0F3738</color>
+    <color name="button_bg">#C0EDE5</color>
+
+    <color name="question_bg">#C0EDE5</color>
+    <color name="question_text">#163F3F</color>
+    <color name="question_mark">#DC2F17</color>
+
+    <color name="red_bg">#F8CFCF</color>
+    <color name="red_text">#940606</color>
+
+    <color name="orange_bg">#FEE2C0</color>
+    <color name="orange_text">#984200</color>
+
+    <color name="yellow_bg">#F3ECB3</color>
+    <color name="yellow_text">#7E4601</color>
+
+    <color name="green_bg">#D4E8C7</color>
+    <color name="green_text">#255C03</color>
+
+    <color name="blue_bg">#BDDCEA</color>
+    <color name="blue_text">#025073</color>
+
+    <color name="violet_bg">#E2C7EC</color>
+    <color name="violet_text">#55096F</color>
+
 </resources>

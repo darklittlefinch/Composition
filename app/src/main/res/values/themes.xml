@@ -6,4 +6,116 @@
     </style>
 
     <style name="Theme.Composition" parent="Base.Theme.Composition" />
+
+    <style name="ImageStyle">
+        <item name="android:layout_marginTop">48dp</item>
+        <item name="android:layout_marginStart">48dp</item>
+        <item name="android:layout_marginEnd">48dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="TitleStyle">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+    </style>
+
+    <style name="LabelStyle">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:backgroundTint">@color/button_bg</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+    </style>
+
+    <style name="DifficultyButtonStyle">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TimerStyle">
+        <item name="android:layout_margin">32dp</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+        <item name="android:background">@drawable/timer_shape</item>
+    </style>
+
+    <style name="SumStyle">
+        <item name="android:layout_margin">32dp</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+        <item name="android:background">@drawable/ic_filled_background</item>
+        <item name="android:backgroundTint">@color/question_bg</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="VisibleNumberStyle">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika</item>
+        <item name="android:background">@drawable/ic_unfilled_background</item>
+        <item name="android:backgroundTint">@color/question_bg</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="QuestionStyle">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:textSize">60sp</item>
+        <item name="android:textColor">@color/question_mark</item>
+        <item name="android:fontFamily">@font/inika_bold</item>
+        <item name="android:background">@drawable/ic_outline_background</item>
+        <item name="android:backgroundTint">@color/question_bg</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AnswerStyle">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:fontFamily">@font/inika</item>
+        <item name="android:background">@drawable/ic_filled_background</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

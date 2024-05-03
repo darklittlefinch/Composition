@@ -1,5 +1,9 @@
 package com.elliemoritz.composition.domain.entities
 
-enum class Difficulty {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class Difficulty: Parcelable {
     TEST, EASY, MEDIUM, HARD
 }

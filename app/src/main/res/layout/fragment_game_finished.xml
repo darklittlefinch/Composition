@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="gameResult"
+            type="com.elliemoritz.composition.domain.entities.GameResult" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg_color"
+        tools:context=".presentation.GameFinishedFragment">
+
+        <ImageView
+            android:id="@+id/ivResultPic"
+            style="@style/ImageStyle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/results_pic_description"
+            app:image="@{gameResult.playerIsWinner}"
+            app:layout_constraintBottom_toTopOf="@id/tvResultLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_like" />
+
+        <TextView
+            android:id="@+id/tvResultLabel"
+            style="@style/TitleStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            app:congrats="@{gameResult.playerIsWinner}"
+            app:layout_constraintBottom_toTopOf="@id/tvAnswersCount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivResultPic"
+            tools:text="@string/results_label_win" />
+
+        <TextView
+            android:id="@+id/tvAnswersCount"
+            style="@style/LabelStyle"
+            android:layout_width="0dp"
+            app:score="@{gameResult}"
+            android:layout_height="wrap_content"
+            tools:text="@string/results_score"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/tvRequiredAnswersCount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultLabel" />
+
+        <TextView
+            android:id="@+id/tvRequiredAnswersCount"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            tools:text="@string/results_required_answers"
+            app:layout_constraintBottom_toTopOf="@id/tvAnswersPercentage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAnswersCount"
+            app:requiredAnswers="@{gameResult.gameSettings.minCorrectAnswersCount}" />
+
+        <TextView
+            android:id="@+id/tvAnswersPercentage"
+            style="@style/LabelStyle"
+            android:layout_width="0dp"
+            app:percentage="@{gameResult}"
+            android:layout_height="wrap_content"
+            tools:text="@string/results_percentage"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/tvRequiredAnswersPercentage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRequiredAnswersCount" />
+
+        <TextView
+            android:id="@+id/tvRequiredAnswersPercentage"
+            style="@style/TextStyle"
+            app:requiredPercentage="@{gameResult.gameSettings.minCorrectAnswersPercentage}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/results_required_percentage"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAnswersPercentage" />
+
+        <Button
+            android:id="@+id/buttonTryAgain"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/results_button"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
